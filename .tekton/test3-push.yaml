@@ -14,7 +14,7 @@ metadata:
     appstudio.openshift.io/component: test3
     pipelines.appstudio.openshift.io/type: build
   name: test3-on-push
-  namespace: exd-rcerven-tenant
+  namespace: test
 spec:
   params:
   - name: git-url
@@ -22,7 +22,7 @@ spec:
   - name: revision
     value: '{{revision}}'
   - name: output-image
-    value: quay.io/redhat-user-workloads/exd-rcerven-tenant/testnudging/test3:{{revision}}
+    value: quay.io/rcerven_rhtaptest/test/exd-rcerven-tenant/testnudging/test3:{{revision}}
   - name: dockerfile
     value: docker/Dockerfile
   pipelineSpec:
