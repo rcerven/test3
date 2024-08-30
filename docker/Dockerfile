@@ -1,3 +1,9 @@
+FROM quay.io/redhat-user-workloads/exd-rcerven-tenant/testnudging/test2:37ed6776f77ad8d7d6d9988a3f32502795c41ff1 AS nudgedimage
+USER 0
+RUN echo "nudged image"
+RUN mkdir /testdir
+COPY somedir/app.py /testdir
+
 FROM registry.access.redhat.com/ubi9/python-39:1-186.1720018722
 
 # By default, listen on port 8081
@@ -18,11 +24,9 @@ RUN \
     then pip install -r *.txt; \
   fi
 
-ARG TEST1
-ARG TEST2
-
-RUN echo "arg TEST1: ${TEST1}"
-RUN echo "arg TEST2: ${TEST2}"
+USER 0
+RUN mkdir /testdir
+COPY --from=nudgedimage /testdir/* .
 
 # Specify the command to run on container start
 CMD [ "python", "./app.py" ]
