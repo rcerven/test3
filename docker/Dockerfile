@@ -1,8 +1,8 @@
 FROM quay.io/redhat-user-workloads/exd-rcerven-tenant/testnudging/test2:37ed6776f77ad8d7d6d9988a3f32502795c41ff1 AS nudgedimage
 USER 0
 RUN echo "nudged image"
-RUN mkdir /testdir
-COPY somedir/app.py /testdir
+RUN mkdir /testdir2
+COPY somedir/app.py /testdir2
 
 FROM registry.access.redhat.com/ubi9/python-39:1-186.1720018722
 
@@ -26,7 +26,7 @@ RUN \
 
 USER 0
 RUN mkdir /testdir
-COPY --from=nudgedimage /testdir/* .
+COPY --from=nudgedimage /testdir2/* .
 
 # Specify the command to run on container start
 CMD [ "python", "./app.py" ]
